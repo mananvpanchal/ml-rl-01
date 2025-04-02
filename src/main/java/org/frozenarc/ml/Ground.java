@@ -76,6 +76,7 @@ public class Ground {
     public void setCurPos(int[] pos) {
         this.curI = pos[0];
         this.curJ = pos[1];
+        path[curI][curJ] = 1;
     }
 
     public int[][] getSurroundings(int[] pos) {

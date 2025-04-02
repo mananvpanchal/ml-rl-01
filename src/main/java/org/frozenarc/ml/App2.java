@@ -12,24 +12,27 @@ import static org.frozenarc.ml.Util.randomDirection;
 public class App2 {
 
     public static void main(String[] args) {
-        int[] targetPos = pos(0, 8);
-        Ground ground = new Ground(9, 100);
+        int[] sourcePos = pos(0, 0);
+        int[] targetPos = pos(14, 14);
+        Ground ground = new Ground(15, 100);
         ground.setValue(targetPos, 0);
         Scanner scanner = new Scanner(System.in);
         String line = null;
         do {
-            ground.setCurPos(pos(0, 0));
             ground.resetPath();
-            for (int i = 0; i < 2000; i++) {
+            ground.setCurPos(sourcePos);
+            int i = 0;
+            for (; i < 5000; i++) {
+                //System.out.println("Iteration: "+i);
                 int[] minDirPos = ground.getMinNeighbour(ground.getCurPos());
                 if (minDirPos[2] == -1) {
                     boolean moved;
                     int dirTrial = 0;
                     do {
                         int direction = randomDirection();
-                        //System.out.println(direction);
                         moved = ground.move(direction);
                         dirTrial++;
+                        System.out.println("Direction Trial: "+dirTrial);
                     } while (!moved && dirTrial < 10);
                 } else {
                     ground.move(pos(minDirPos[0], minDirPos[1]));
@@ -42,7 +45,13 @@ public class App2 {
                     break;
                 }
             }
+            if (!Util.posEquals(ground.getCurPos(), targetPos)) {
+                System.out.println("Iteration done without result");
+            } else {
+                System.out.println("Iteration done: "+i);
+            }
             line = scanner.nextLine();
-        } while (!line.equals("q"));
+        } while (line.isEmpty());
+        scanner.close();
     }
 }
