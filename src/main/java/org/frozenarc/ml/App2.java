@@ -12,9 +12,9 @@ import static org.frozenarc.ml.Util.randomDirection;
 public class App2 {
 
     public static void main(String[] args) {
-        int[] sourcePos = pos(0, 0);
-        int[] targetPos = pos(14, 14);
-        Ground ground = new Ground(15, 100);
+        int[] sourcePos = pos(8, 8);
+        int[] targetPos = pos(0, 0);
+        Ground ground = new Ground(9, 100);
         ground.setValue(targetPos, 0);
         Scanner scanner = new Scanner(System.in);
         String line = null;
@@ -32,7 +32,7 @@ public class App2 {
                         int direction = randomDirection();
                         moved = ground.move(direction);
                         dirTrial++;
-                        System.out.println("Direction Trial: "+dirTrial);
+                        //System.out.println("Direction Trial: "+dirTrial);
                     } while (!moved && dirTrial < 10);
                 } else {
                     ground.move(pos(minDirPos[0], minDirPos[1]));
