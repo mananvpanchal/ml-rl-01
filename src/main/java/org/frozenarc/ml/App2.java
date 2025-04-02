@@ -12,9 +12,13 @@ import static org.frozenarc.ml.Util.randomDirection;
 public class App2 {
 
     public static void main(String[] args) {
-        int[] sourcePos = pos(8, 8);
-        int[] targetPos = pos(0, 0);
-        Ground ground = new Ground(9, 100);
+        int[] sourcePos = pos(0, 0);
+        int[] targetPos = pos(8, 8);
+        int size = 9;
+        double a = 0.6;
+        double b = 0.9;
+
+        Ground ground = new Ground(size, 100, 0.1);
         ground.setValue(targetPos, 0);
         Scanner scanner = new Scanner(System.in);
         String line = null;
@@ -35,9 +39,11 @@ public class App2 {
                         //System.out.println("Direction Trial: "+dirTrial);
                     } while (!moved && dirTrial < 10);
                 } else {
+                    System.out.print("Moving to: ");
+                    ground.showPosition(pos(minDirPos[0], minDirPos[1]));
                     ground.move(pos(minDirPos[0], minDirPos[1]));
-                    ground.setPrevValuePercentage(0.8);
-                    ground.setSurroundingValuesPercentageExceptPrevNext(0.9);
+                    ground.setPrevValuePercentage(a);
+                    ground.setSurroundingValuesPercentageExceptPrevNext(b);
                 }
                 if (Util.posEquals(ground.getCurPos(), targetPos)) {
                     ground.showGrd();
@@ -48,7 +54,7 @@ public class App2 {
             if (!Util.posEquals(ground.getCurPos(), targetPos)) {
                 System.out.println("Iteration done without result");
             } else {
-                System.out.println("Iteration done: "+i);
+                System.out.println("Iteration done: " + i);
             }
             line = scanner.nextLine();
         } while (line.isEmpty());

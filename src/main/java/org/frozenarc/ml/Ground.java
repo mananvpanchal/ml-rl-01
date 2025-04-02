@@ -13,6 +13,7 @@ import static org.frozenarc.ml.Util.pos;
 public class Ground {
 
     private final int size;
+    private final double minPathValue;
     private int curI = 0;
     private int curJ = 0;
     private int prevI = -1;
@@ -21,8 +22,9 @@ public class Ground {
     private final int[][] path;
     private final NumberFormat numberFormat;
 
-    public Ground(int size, double initVal) {
+    public Ground(int size, double initVal, double minPathValue) {
         this.size = size;
+        this.minPathValue = minPathValue;
         grd = new double[size][size];
         path = new int[size][size];
         for (double[] rows : grd) {
@@ -151,7 +153,7 @@ public class Ground {
 
     public void setPrevValuePercentage(double percentage) {
         double val = getValue(getPrevPos());
-        if (val > 0.5) {
+        if (val > minPathValue) {
             setValue(getPrevPos(), val * percentage);
         }
     }
@@ -165,7 +167,7 @@ public class Ground {
                 if (!(pos[0] == prevI && pos[1] == prevJ)
                     && !(pos[0] == minNeighbour[0] && pos[1] == minNeighbour[1])) {
                     double val = getValue(pos(pos[0], pos[1]));
-                    if (val > 0.5) {
+                    if (val > minPathValue) {
                         setValue(pos(pos[0], pos[1]), val * percentage);
                     }
                 }
