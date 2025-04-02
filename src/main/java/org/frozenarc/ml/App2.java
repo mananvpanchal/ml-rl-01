@@ -15,10 +15,12 @@ public class App2 {
         int[] sourcePos = pos(0, 0);
         int[] targetPos = pos(8, 8);
         int size = 9;
-        double a = 0.6;
+        //b^2 < a
+        double a = 0.83;
         double b = 0.9;
+        double minPathValue = 0.01;
 
-        Ground ground = new Ground(size, 100, 0.1);
+        Ground ground = new Ground(size, 100, minPathValue);
         ground.setValue(targetPos, 0);
         Scanner scanner = new Scanner(System.in);
         String line = null;
@@ -39,7 +41,7 @@ public class App2 {
                         //System.out.println("Direction Trial: "+dirTrial);
                     } while (!moved && dirTrial < 10);
                 } else {
-                    System.out.print("Moving to: ");
+                    //System.out.print("Moving to: ");
                     ground.showPosition(pos(minDirPos[0], minDirPos[1]));
                     ground.move(pos(minDirPos[0], minDirPos[1]));
                     ground.setPrevValuePercentage(a);
